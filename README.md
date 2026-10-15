@@ -1,38 +1,89 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js Blog
+
+A blog built with Next.js and TypeScript. Posts are written in Markdown, pages are statically generated, and the contact form stores messages in MongoDB.
+
+## Features
+
+- Static generation of the home page, post list and post pages (ISR, revalidated every 10 minutes)
+- Posts written in Markdown with front matter
+- Syntax highlighting for code blocks
+- Contact form with a MongoDB-backed API route
+- Responsive layout with CSS Modules
+
+## Tech Stack
+
+- Next.js 13 (Pages Router)
+- React 18
+- TypeScript
+- MongoDB
+- gray-matter, react-markdown, react-syntax-highlighter
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a local env file and set your MongoDB connection string:
+
+```bash
+cp .env.example .env.local
+```
+
+```
+MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/my-site?retryWrites=true&w=majority
+```
+
+Run the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+| Command         | Description                    |
+| --------------- | ------------------------------ |
+| `npm run dev`   | Start the development server   |
+| `npm run build` | Create a production build      |
+| `npm start`     | Run the production build       |
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Project Structure
 
-## Learn More
+```
+components/   UI components (layout, home page, posts, contact, ui)
+lib/          Helpers for reading Markdown posts
+pages/        Routes and the /api/contact endpoint
+posts/        Markdown posts
+public/       Static assets and post images
+styles/       Global styles
+types/        Shared TypeScript types
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Adding a Post
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Create a `.md` file in `posts/` with front matter:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```md
+---
+title: 'My Post'
+date: '2022-10-16'
+image: my-post.png
+excerpt: A short summary of the post.
+isFeatured: false
+---
 
-## Deploy on Vercel
+Post content here.
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Put the images in `public/images/posts/<file-name>/`, where `<file-name>` matches the Markdown file name without the extension.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Environment Variables
 
-## Contact form
-
-The contact form stores messages in MongoDB. Copy `.env.example` to `.env.local` and set `MONGODB_URI` to your own connection string.
+| Variable      | Description                          |
+| ------------- | ------------------------------------ |
+| `MONGODB_URI` | MongoDB connection string (required for the contact form) |
